@@ -9,26 +9,9 @@ Dedalus Machines run on a base Ubuntu (lynx, x86_64) image by default. Custom Im
 
 Dedalus Custom Images give you full control over the operating system and software stack running on your Dedalus Machine. Upload a custom disk image, whether it is a hardened Linux distribution, a pre-configured appliance, or a specialized workload environment, and launch machines from it just like any standard image.
 
-<CardGroup cols={2}>
-  <Card title="Quick Start" icon="rocket">
-    Upload your first custom image and launch a machine in under 30 minutes.
-  </Card>
-  <Card title="Core Concepts" icon="book">
-    Understand images, machine types, and how custom images fit into Dedalus Machines.
-  </Card>
-  <Card title="Image Requirements" icon="circle-check">
-    Review the format, size, and configuration requirements before uploading.
-  </Card>
-  <Card title="Guides" icon="map">
-    Step-by-step walkthroughs for building, uploading, and managing custom images.
-  </Card>
-</CardGroup>
-
 ## Why Custom Images
 
-The base Ubuntu image works for many workloads but does not include system-level dependencies that many agents require. Custom Images solves this by letting you bring your own environment.
-
-Common use cases include:
+The base Ubuntu image works for many workloads but does not include system-level dependencies that many agents require. Custom Images solves this by letting you bring your own environment. Common use cases include:
 
 - Agents that require specific Python versions, ML frameworks like PyTorch or CUDA, or lower-level libraries like ffmpeg
 - Pre-configured appliances with all dependencies baked in, eliminating setup scripts at machine creation time
@@ -36,10 +19,7 @@ Common use cases include:
 
 ## How It Works
 
-1. Build or pull a Docker image locally with your required dependencies
-2. Push the image to ECR, GHCR, or Docker Hub
-3. Register the image with Dedalus via the CLI or SDK
-4. Create a machine using your custom image
+Build or pull a Docker image locally with your required dependencies, push it to ECR, GHCR, or Docker Hub, then create a machine using your custom image URI.
 
 ```bash
 dedalus machines create --vcpu 1 --memory-mib 1024 --image myregistry/myimage:latest
@@ -53,8 +33,25 @@ Dedalus pulls the image, caches it internally, and boots the machine into your e
 - GitHub Container Registry (GHCR)
 - Docker Hub
 
-## Requirements
+## Image Requirements
 
 - Images must be OCI-compatible
-- Authentication via short-lived credentials or OAuth tokens
 - Kernel-level customization is not supported in this release
+- Authentication via short-lived credentials or OAuth tokens through DAuth
+
+## Key Concepts
+
+<CardGroup cols={2}>
+  <Card title="OCI-Compatible Images" icon="box">
+    Dedalus supports any image that conforms to the Open Container Initiative spec. Build with Docker, Podman, or any OCI-compliant tool and push to your registry of choice.
+  </Card>
+  <Card title="Internal Image Cache" icon="database">
+    Dedalus caches your image after the first pull. Subsequent machine creation uses the cached version, keeping boot times fast and removing dependency on external registry availability.
+  </Card>
+  <Card title="Registry Authentication" icon="lock">
+    Connect ECR, GHCR, or Docker Hub using short-lived credentials or OAuth tokens. Dedalus handles credential isolation through DAuth so long-lived secrets are never stored.
+  </Card>
+  <Card title="Persistent Runtime" icon="server">
+    Machines boot into your custom environment and persist filesystem and memory across sessions. You only pay for active compute, not idle time.
+  </Card>
+</CardGroup>
