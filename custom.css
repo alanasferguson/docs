@@ -1,0 +1,16 @@
+/* Custom CSS for Dedalus Custom Images docs */
+/* Changed: primary heading color to Dedalus purple and increased font weight */
+
+h1 {
+  color: #7C3AED;
+  font-weight: 700;
+}
+
+h2 {
+  color: #5B21B6;
+  font-weight: 600;
+}
+
+.content-container {
+  max-width: 860px;
+}
