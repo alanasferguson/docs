@@ -12,6 +12,7 @@
     "dark": "#5B21B6"
   },
   "favicon": "/favicon.svg",
+  "css": ["/custom.css"],
   "navigation": {
     "tabs": [
       {
