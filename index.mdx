@@ -19,11 +19,7 @@ The base Ubuntu image works for many workloads but does not include system-level
 
 ## How It Works
 
-Build or pull a Docker image locally with your required dependencies, push it to ECR, GHCR, or Docker Hub, then create a machine using your custom image URI.
-
-```bash
-dedalus machines create --vcpu 1 --memory-mib 1024 --image myregistry/myimage:latest
-```
+Build or pull a Docker image locally with your required dependencies and push it to ECR, GHCR, or Docker Hub. Then create a machine specifying your custom image URI.
 
 Dedalus pulls the image, caches it internally, and boots the machine into your environment. On subsequent machine creation using the same image, Dedalus pulls from its internal cache rather than the external registry, reducing boot time.
 
@@ -43,7 +39,7 @@ Dedalus pulls the image, caches it internally, and boots the machine into your e
 
 <CardGroup cols={2}>
   <Card title="OCI-Compatible Images" icon="box">
-    Dedalus supports any image that conforms to the Open Container Initiative spec. Build with Docker, Podman, or any OCI-compliant tool and push to your registry of choice.
+    Dedalus supports any image that conforms to the Open Container Initiative spec. Build with Docker or any OCI-compliant tool and push to your registry of choice.
   </Card>
   <Card title="Internal Image Cache" icon="database">
     Dedalus caches your image after the first pull. Subsequent machine creation uses the cached version, keeping boot times fast and removing dependency on external registry availability.
