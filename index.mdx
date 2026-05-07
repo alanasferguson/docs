@@ -24,7 +24,7 @@ Common use cases include:
 
 Build an OCI-compatible image with your required dependencies and push it to ECR, GHCR, or Docker Hub. Then import the image into Dedalus and create a machine from the registered image.
 
-Dedalus resolves the image to an immutable digest, stores it internally, and uses that stored image when launching machines. This keeps machine creation from depending on external registry uptime, rate limits, mutable tags, or registry authentication state.
+When an image is imported, Dedalus resolves it to an immutable digest and stores it internally. Machine launches then use the stored image rather than depending on external registry uptime, rate limits, mutable tags, or registry authentication state.
 
 ## Supported Registries
 
@@ -46,7 +46,7 @@ Dedalus resolves the image to an immutable digest, stores it internally, and use
   </Card>
 
   <Card title="Internal Image Storage" icon="database">
-    Dedalus stores imported images internally so machine creation is not dependent on external registry availability, rate limits, or mutable tags.
+    Imported images are stored internally so machine creation is not dependent on external registry availability, rate limits, or mutable tags.
   </Card>
 
   <Card title="Registry Authentication" icon="lock">
