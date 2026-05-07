@@ -1,16 +1,16 @@
-/* Custom CSS for Dedalus Custom Images docs */
-/* Changed: primary heading color to Dedalus purple and increased font weight */
+/* Custom CSS changes for Dedalus Custom Images docs */
+/* Changes made: switched body font to Inter, adjusted heading weight, 
+   added purple left border accent to code blocks */
 
-h1 {
-  color: #7C3AED;
-  font-weight: 700;
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-h2 {
-  color: #5B21B6;
+h1, h2, h3 {
   font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
-.content-container {
-  max-width: 860px;
+pre {
+  border-left: 3px solid #7C3AED;
 }
