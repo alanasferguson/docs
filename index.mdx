@@ -1,27 +1,30 @@
 ---
 title: "Custom Images for Dedalus Machines"
-description: "Run your own OS on Dedalus Machines"
+description: "Launch Dedalus Machines from your own OCI image"
 ---
 
 ## Overview
 
-Dedalus Machines run on a base Ubuntu (lynx, x86_64) image by default. Custom Images lets you upload, register, and launch your own OS images on Dedalus Machines. Bring any compatible disk image and run it fast.
+Dedalus Machines run from a base Ubuntu image by default. Custom Images let you import, register, and launch OCI-compatible images from ECR, GHCR, or Docker Hub, so each machine starts with the runtimes, packages, and tools your agent needs.
 
-Dedalus Custom Images give you full control over the operating system and software stack running on your Dedalus Machine. Upload a custom disk image, whether it is a hardened Linux distribution, a pre-configured appliance, or a specialized workload environment, and launch machines from it just like any standard image.
+Use Custom Images when your agent depends on specific language versions, browser tooling, system packages, private CLIs, ML libraries, or repo-specific build tools that are not included in the base image.
 
 ## Why Custom Images
 
-The base Ubuntu image works for many workloads but does not include system-level dependencies that many agents require. Custom Images solves this by letting you bring your own environment. Common use cases include:
+The base Ubuntu image works for simple workloads, but production agents often need a reproducible runtime environment. Custom Images reduce setup scripts, avoid manual dependency installation after machine creation, and make repeated machine launches more consistent.
 
-- Agents that require specific Python versions, ML frameworks like PyTorch or CUDA, or lower-level libraries like ffmpeg
-- Pre-configured appliances with all dependencies baked in, eliminating setup scripts at machine creation time
-- Specialized workload environments that need consistent, reproducible runtime conditions across every machine
+Common use cases include:
+
+- Agents that require specific Python, Node, or package manager versions
+- Browser agents that need Playwright, Chromium, or related system packages
+- Coding agents that need repo-specific build tools, private packages, or test runners
+- ML or research agents that need preinstalled libraries and lower-level tools like ffmpeg
 
 ## How It Works
 
-Build or pull a Docker image locally with your required dependencies and push it to ECR, GHCR, or Docker Hub. Then create a machine specifying your custom image URI.
+Build an OCI-compatible image with your required dependencies and push it to ECR, GHCR, or Docker Hub. Then import the image into Dedalus and create a machine from the registered image.
 
-Dedalus pulls the image, caches it internally, and boots the machine into your environment. On subsequent machine creation using the same image, Dedalus pulls from its internal cache rather than the external registry, reducing boot time.
+Dedalus resolves the image to an immutable digest, stores it internally, and uses that stored image when launching machines. This keeps machine creation from depending on external registry uptime, rate limits, mutable tags, or registry authentication state.
 
 ## Supported Registries
 
@@ -32,22 +35,25 @@ Dedalus pulls the image, caches it internally, and boots the machine into your e
 ## Image Requirements
 
 - Images must be OCI-compatible
-- Kernel-level customization is not supported in this release
-- Authentication via short-lived credentials or OAuth tokens through DAuth
+- Kernel-level customization is not supported
+- Private registries require registry credentials configured through Dedalus
 
 ## Key Concepts
 
 <CardGroup cols={2}>
   <Card title="OCI-Compatible Images" icon="box">
-    Dedalus supports any image that conforms to the Open Container Initiative spec. Build with Docker or any OCI-compliant tool and push to your registry of choice.
+    Build with Docker or another OCI-compliant tool, then push the image to a supported registry.
   </Card>
-  <Card title="Internal Image Cache" icon="database">
-    Dedalus caches your image after the first pull. Subsequent machine creation uses the cached version, keeping boot times fast and removing dependency on external registry availability.
+
+  <Card title="Internal Image Storage" icon="database">
+    Dedalus stores imported images internally so machine creation is not dependent on external registry availability, rate limits, or mutable tags.
   </Card>
+
   <Card title="Registry Authentication" icon="lock">
-    Connect ECR, GHCR, or Docker Hub using short-lived credentials or OAuth tokens. Dedalus handles credential isolation through DAuth so long-lived secrets are never stored.
+    Connect private registries by providing credentials Dedalus can use to import the image.
   </Card>
-  <Card title="Persistent Runtime" icon="server">
-    Machines boot into your custom environment and persist filesystem and memory across sessions. You only pay for active compute, not idle time.
+
+  <Card title="Reproducible Runtime" icon="server">
+    Machines launch from a registered image so agents start with the same expected dependencies each time.
   </Card>
 </CardGroup>
