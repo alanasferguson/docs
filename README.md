@@ -1,3 +1,43 @@
+# Dedalus Custom Images Docs
+
+Documentation for the Custom Images feature for Dedalus Machines, built with Mintlify.
+
+## Live Site
+
+https://dedalus-69.mintlify.app
+
+## CSS Customizations
+
+All changes are in `custom.css`. The following modifications were made on top of the default Mintlify linden template:
+
+1. **Global font override** — Applied Inter sans-serif across all elements using a universal selector with `!important` to override Mintlify's default monospace font throughout the page and sidebar navigation.
+
+2. **Code block font restoration** — After the global override, explicitly restored monospace font (`JetBrains Mono`, `Fira Code`) to `pre` and `code` elements so actual code blocks render correctly.
+
+3. **Code block left border** — Added a 3px solid purple (`#7C3AED`) left border to `pre` elements to visually anchor code blocks with Dedalus's primary brand color.
+
+4. **Heading letter spacing** — Tightened letter spacing to `-0.02em` on all headings to reduce the default looseness and improve readability at larger sizes.
+
+> **Note:** The original Mintlify starter template content is preserved below the divider line per the assignment specifications.
+
+---
+
+[Original Mintlify starter template content below]
+
+# Mintlify Starter Kit
+
+Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
+
+- Guide pages
+- Navigation
+- Customizations
+- API reference pages
+- Use of popular components
+
+### Development
+
+Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
+
 # Mintlify Starter Kit
 
 Use the starter kit to get your docs deployed and ready to customize.
