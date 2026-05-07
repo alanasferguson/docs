@@ -12,10 +12,17 @@
     "dark": "#5B21B6"
   },
   "favicon": "/favicon.svg",
-  "navigation": [
-    {
-      "group": "Getting Started",
-      "pages": ["index"]
-    }
-  ]
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": ["index"]
+          }
+        ]
+      }
+    ]
+  }
 }
