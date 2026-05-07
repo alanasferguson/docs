@@ -1,14 +1,19 @@
 /* Custom CSS changes for Dedalus Custom Images docs */
-/* Changes made: switched body font to Inter, adjusted heading weight, 
-   added purple left border accent to code blocks */
+/* Changes: overrode default monospace font with Inter sans-serif across
+   headings, body, and navigation sidebar. Added purple left border accent
+   to code blocks. Tightened heading letter spacing. */
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   letter-spacing: -0.02em;
+}
+
+pre, code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
 }
 
 pre {
