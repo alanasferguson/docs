@@ -1,133 +1,60 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
-icon: 'star'
+title: "Custom Images for Dedalus Machines"
+description: "Run your own OS on Dedalus Machines"
 ---
 
-## Setting up
+## Overview
 
-Get your documentation site up and running in minutes.
+Dedalus Machines run on a base Ubuntu (lynx, x86_64) image by default. Custom Images lets you upload, register, and launch your own OS images on Dedalus Machines. Bring any compatible disk image and run it fast.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+Dedalus Custom Images give you full control over the operating system and software stack running on your Dedalus Machine. Upload a custom disk image, whether it is a hardened Linux distribution, a pre-configured appliance, or a specialized workload environment, and launch machines from it just like any standard image.
 
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="rocket">
+    Upload your first custom image and launch a machine in under 30 minutes.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Core Concepts" icon="book">
+    Understand images, machine types, and how custom images fit into Dedalus Machines.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Image Requirements" icon="circle-check">
+    Review the format, size, and configuration requirements before uploading.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Guides" icon="map">
+    Step-by-step walkthroughs for building, uploading, and managing custom images.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## Why Custom Images
 
-Everything you need to create world-class documentation.
+The base Ubuntu image works for many workloads but does not include system-level dependencies that many agents require. Custom Images solves this by letting you bring your own environment.
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+Common use cases include:
 
-## Make your content agent ready
+- Agents that require specific Python versions, ML frameworks like PyTorch or CUDA, or lower-level libraries like ffmpeg
+- Pre-configured appliances with all dependencies baked in, eliminating setup scripts at machine creation time
+- Specialized workload environments that need consistent, reproducible runtime conditions across every machine
 
-Make your docs work for humans and AI agents alike.
+## How It Works
 
-<Columns cols={2}>
-  <Card
-    title="Prompt component"
-    icon="robot"
-    href="/agent-ready/prompt"
-  >
-    Embed shareable AI prompts readers can copy or open in Cursor.
-  </Card>
-  <Card
-    title="Visibility"
-    icon="eye"
-    href="/agent-ready/visibility"
-  >
-    Show different content to humans and agents reading your docs.
-  </Card>
-  <Card
-    title="Contextual menu"
-    icon="bolt"
-    href="/agent-ready/contextual"
-  >
-    Give readers one-click access to Claude, ChatGPT, Cursor, and more.
-  </Card>
-  <Card
-    title="AI coding tools"
-    icon="wand-magic-sparkles"
-    href="/ai-tools/claude-code"
-  >
-    Set up Claude Code, Cursor, or Windsurf with Mintlify's skill.
-  </Card>
-</Columns>
+1. Build or pull a Docker image locally with your required dependencies
+2. Push the image to ECR, GHCR, or Docker Hub
+3. Register the image with Dedalus via the CLI or SDK
+4. Create a machine using your custom image
 
-## Need inspiration?
+```bash
+dedalus machines create --vcpu 1 --memory-mib 1024 --image myregistry/myimage:latest
+```
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+Dedalus pulls the image, caches it internally, and boots the machine into your environment. On subsequent machine creation using the same image, Dedalus pulls from its internal cache rather than the external registry, reducing boot time.
+
+## Supported Registries
+
+- Amazon ECR
+- GitHub Container Registry (GHCR)
+- Docker Hub
+
+## Requirements
+
+- Images must be OCI-compatible
+- Authentication via short-lived credentials or OAuth tokens
+- Kernel-level customization is not supported in this release
